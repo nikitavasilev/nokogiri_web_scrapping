@@ -10,9 +10,6 @@ require 'open-uri'
 def deputy
 	first = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau")).css("td:nth-child(2)")
 	last = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau")).css("td:nth-child(3)")
-	
-	contact = contact.each{|link| puts "http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau" + (link['href'].delete_prefix('.'))}
-
 
 	first_name = []
 	last_name = []
@@ -43,7 +40,6 @@ def get_the_profile_links
     contact.each{|link| get_the_email_of_deputys(link['href'].delete_prefix('.'))}
 end
 
-get_the_profile_links()
-
 deputy()
 
+get_the_profile_links()
