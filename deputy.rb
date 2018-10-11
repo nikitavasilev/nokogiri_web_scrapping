@@ -13,7 +13,7 @@ def deputy
 	
 	contact = contact.each{|link| puts "http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau" + (link['href'].delete_prefix('.'))}
 
-=begin
+
 	first_name = []
 	last_name = []
 
@@ -29,21 +29,21 @@ def deputy
 
   	hash = Hash[first_name.zip(last_name)]
   	puts hash.map {|first_name, last_name| {:Prénom => first_name, :Nom => last_name}}
-=end
+
 end
 
 def get_the_email_of_deputys(link)
-	page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{link}"))
-	nodeset = page.css("#haut-contenu-page > article > div.contenu-principal.en-direct-commission.clearfix > div > dl > dd:nth-child(8) > ul > li:nth-child(1) > a[href]")
-	puts nodeset.map {|element| element["href"].delete_prefix("mailto:")}
+    page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{link}"))
+    nodeset = page.css("#haut-contenu-page > article > div.contenu-principal.en-direct-commission.clearfix > div > dl > dd:nth-child(8) > ul > li:nth-child(1) > a[href]")
+    puts nodeset.map {|element| element["href"].delete_prefix("mailto:")}
 end
 
-def get_all_the_urls_of_val_doise_townhalls
-	contact = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau")).css("td:nth-child(8) a")
-	contact.each{|link| get_the_email_of_deputys(link['href'].delete_prefix('.'))}
+def get_the_profile_links
+    contact = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/regions/(vue)/tableau")).css("td:nth-child(8) a")
+    contact.each{|link| get_the_email_of_deputys(link['href'].delete_prefix('.'))}
 end
 
-get_all_the_urls_of_val_doise_townhalls()
+get_the_profile_links()
 
 deputy()
 
