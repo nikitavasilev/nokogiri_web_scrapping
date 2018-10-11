@@ -30,9 +30,14 @@ def deputy
 end
 
 def get_the_email_of_deputys(link)
+	emails = []
     page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{link}"))
     nodeset = page.css("#haut-contenu-page > article > div.contenu-principal.en-direct-commission.clearfix > div > dl > dd:nth-child(8) > ul > li:nth-child(1) > a[href]")
-    puts nodeset.map {|element| element["href"].delete_prefix("mailto:")}
+    nodeset = nodeset.map {|element| element["href"].delete_prefix("mailto:")}
+    nodeset.each do |link|
+    	emails << link
+  	end
+  	puts emails
 end
 
 def get_the_profile_links
